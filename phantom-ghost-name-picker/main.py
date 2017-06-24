@@ -27,7 +27,7 @@ class Name(db.Model):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        path = os.path.join(os.path.dirname(__file__), 'templates/form.html')
+        path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
         self.response.out.write(template.render(path, {}))
 
 app = webapp2.WSGIApplication([
