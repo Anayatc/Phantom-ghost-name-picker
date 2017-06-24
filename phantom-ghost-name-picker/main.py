@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 import webapp2
 import os
 from google.appengine.ext import db
@@ -43,7 +44,7 @@ class FormHandler(webapp2.RedirectHandler):
         self.response.out.write(template.render(path, {}))
 
     def post(self):
-        self.response.out.write('sent')
+        self.response.out.write('posted')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
