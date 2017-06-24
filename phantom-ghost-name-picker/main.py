@@ -15,6 +15,13 @@
 # limitations under the License.
 #
 import webapp2
+from google.appengine.ext import db
+
+
+class Name(db.Model):
+    first_name = db.StringProperty()
+    last_name = db.StringProperty()
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
