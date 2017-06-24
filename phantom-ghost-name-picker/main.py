@@ -15,10 +15,19 @@
 # limitations under the License.
 #
 
+import csv
 import webapp2
 import os
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
+
+ghost_name_list = ['Betelgeuse', 'Bhoot', 'Bloody Mary', 'Bogle', 'Casper', 'Chindi', 'Cihuateteo', 'Clytemnestra',
+                   'Draugr', 'Dybbuk', 'Gjenganger', 'Guĭ', 'Ibbur', 'Jima', 'Jinn', 'La Llorona',
+                   'Moaning Myrtle', 'Mr. Boogedy', 'Nachzehrer', 'Blinky', 'Pinky', 'Inky', 'Clyde',
+                   'Patrick Swayze', 'Phi Tai Hong', 'Pishacha', 'Poltergeist', 'Revenant', 'Ringwraith',
+                   'Slender Man', 'Slimer', 'Space Ghost', 'Strigoi', 'Candyman', 'The Crypt Keeper',
+                   'Headless Horseman', 'Tomás', 'Vetala', 'Wiedergänger', 'Xunantunich', 'Yūrei', 'Zhong Kui',
+                   'Zuul']
 
 
 class Name(db.Model):
