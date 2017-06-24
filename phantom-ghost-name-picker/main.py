@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 # Copyright 2007 Google Inc.
 #
@@ -15,11 +16,14 @@
 # limitations under the License.
 #
 
-import csv
 import webapp2
+import jinja2
 import os
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
+
+
+jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"))
 
 ghost_name_list = ['Betelgeuse', 'Bhoot', 'Bloody Mary', 'Bogle', 'Casper', 'Chindi', 'Cihuateteo', 'Clytemnestra',
                    'Draugr', 'Dybbuk', 'Gjenganger', 'Guĭ', 'Ibbur', 'Jima', 'Jinn', 'La Llorona',
@@ -30,6 +34,7 @@ ghost_name_list = ['Betelgeuse', 'Bhoot', 'Bloody Mary', 'Bogle', 'Casper', 'Chi
                    'Zuul']
 
 
+
 class Name(db.Model):
     firstname = db.StringProperty()
     lastname = db.StringProperty()
@@ -38,8 +43,13 @@ class Name(db.Model):
 class MainHandler(webapp2.RequestHandler):
 
     def get(self):
-        path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
-        self.response.out.write(template.render(path, {}))
+        template_values = {
+            'names': ghost_name_list
+
+        }
+
+        template = jinja_environment.get_template('index.html')
+        self.response.out.write(template.render(template_values))
 
     def post(self):
         path = os.path.join(os.path.dirname(__file__), 'templates/form.html')
