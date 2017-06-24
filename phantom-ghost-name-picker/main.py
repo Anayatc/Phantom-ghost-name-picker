@@ -22,8 +22,8 @@ from google.appengine.ext.webapp import template
 
 
 class Name(db.Model):
-    first_name = db.StringProperty(required=True)
-    last_name = db.StringProperty(required=True)
+    firstname = db.StringProperty()
+    lastname = db.StringProperty()
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -44,7 +44,10 @@ class FormHandler(webapp2.RedirectHandler):
         self.response.out.write(template.render(path, {}))
 
     def post(self):
-        self.response.out.write('posted')
+        name = Name(firstname=self.request.get('first-name'), lastname=self.request.get('last-name'))
+        name.put()
+        path = os.path.join(os.path.dirname(__file__), 'templates/select-name.html')
+        self.response.out.write(template.render(path, {}))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
