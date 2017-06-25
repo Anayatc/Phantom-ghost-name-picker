@@ -19,6 +19,7 @@
 import webapp2
 import jinja2
 import os
+import random
 from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
@@ -79,6 +80,23 @@ class FormHandler(webapp2.RedirectHandler):
         name.put()
         path = os.path.join(os.path.dirname(__file__), 'templates/select-name.html')
         self.response.out.write(template.render(path, {}))
+
+
+class NameSelect(webapp2.RedirectHandler):
+
+    def get(self):
+        name = db.GqlQuery('SELECT * FROM Name')
+        template_values = {
+            'firstname': name.firstname,
+            'ghostname': random.choice(ghost_name_list),
+            'lastname': name.lastname
+        }
+        template = jinja_environment.get_template('select-name.html')
+        self.response.out.write(template.render(template_values))
+
+    def post(self):
+        pass
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

@@ -6,6 +6,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-    <h1> Select your phantom name</h1>
+    <h1> Select your phantom name:</h1>
+<div class="container">
+<select class="selectpicker" data-live-search="true">
+  <option data-tokens="1"> {{ firstname }} "{{ ghostname }}" {{ lastname }}</option>
+  <option data-tokens="2"> {{ firstname }} "{{ ghostname }}" {{ lastname }}</option>
+  <option data-tokens="3"> {{ firstname }} "{{ ghostname }}" {{ lastname }}</option>
+</select>
+</div>
+<h1>{{ firstname }} "{{ ghostname }}" {{ lastname }}</h1>
 </body>
 </html>
