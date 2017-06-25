@@ -20,6 +20,7 @@ import webapp2
 import jinja2
 import os
 from google.appengine.ext import db
+from google.appengine.api import users
 from google.appengine.ext.webapp import template
 
 
@@ -42,13 +43,25 @@ class Name(db.Model):
 class MainHandler(webapp2.RequestHandler):
 
     def get(self):
-        template_values = {
-            'names': ghost_name_list
+        user = users.get_current_user()
 
-        }
+        if user:
+            template_values = {
+                'user': user,
+                'is_admin': users.is_current_user_admin(),
+                'logout_url': users.create_logout_url('/'),
+                'names': ghost_name_list,
+            }
+            template = jinja_environment.get_template('index.html')
+            self.response.out.write(template.render(template_values))
 
-        template = jinja_environment.get_template('index.html')
-        self.response.out.write(template.render(template_values))
+        else:
+            template_values = {
+                'login_url': users.create_login_url(self.request.url),
+                'names': ghost_name_list
+            }
+            template = jinja_environment.get_template('index.html')
+            self.response.out.write(template.render(template_values))
 
     def post(self):
         path = os.path.join(os.path.dirname(__file__), 'templates/form.html')
