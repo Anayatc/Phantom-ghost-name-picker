@@ -20,19 +20,17 @@ import webapp2
 import jinja2
 import os
 from google.appengine.ext import db
-from google.appengine.ext.webapp import template
 
 
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"))
 
 ghost_name_list = ['Betelgeuse', 'Bhoot', 'Bloody Mary', 'Bogle', 'Casper', 'Chindi', 'Cihuateteo', 'Clytemnestra',
-                   'Draugr', 'Dybbuk', 'Gjenganger', 'Guĭ', 'Ibbur', 'Jima', 'Jinn', 'La Llorona',
+                   'Draugr', 'Dybbuk', 'Gjenganger', u'Guĭ', 'Ibbur', 'Jima', 'Jinn', 'La Llorona',
                    'Moaning Myrtle', 'Mr. Boogedy', 'Nachzehrer', 'Blinky', 'Pinky', 'Inky', 'Clyde',
                    'Patrick Swayze', 'Phi Tai Hong', 'Pishacha', 'Poltergeist', 'Revenant', 'Ringwraith',
                    'Slender Man', 'Slimer', 'Space Ghost', 'Strigoi', 'Candyman', 'The Crypt Keeper',
-                   'Headless Horseman', 'Tomás', 'Vetala', 'Wiedergänger', 'Xunantunich', 'Yūrei', 'Zhong Kui',
+                   'Headless Horseman', u'Tomás', 'Vetala', u'Wiedergänger', 'Xunantunich', u'Yūrei', 'Zhong Kui',
                    'Zuul']
-
 
 
 class Name(db.Model):
@@ -52,21 +50,22 @@ class MainHandler(webapp2.RequestHandler):
         self.response.out.write(template.render(template_values))
 
     def post(self):
-        path = os.path.join(os.path.dirname(__file__), 'templates/form.html')
-        self.response.out.write(template.render(path, {}))
+        template = jinja_environment.get_template('form.html')
+        self.response.out.write(template.render(template, {}))
 
 
 class FormHandler(webapp2.RedirectHandler):
 
     def get(self):
-        path = os.path.join(os.path.dirname(__file__), 'templates/form.html')
-        self.response.out.write(template.render(path, {}))
+        template = jinja_environment.get_template('form.html')
+        self.response.out.write(template.render(template, {}))
 
     def post(self):
         name = Name(firstname=self.request.get('first-name'), lastname=self.request.get('last-name'))
         name.put()
-        path = os.path.join(os.path.dirname(__file__), 'templates/select-name.html')
-        self.response.out.write(template.render(path, {}))
+        template = jinja_environment.get_template('select-name.html')
+        self.response.out.write(template.render(template, {}))
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

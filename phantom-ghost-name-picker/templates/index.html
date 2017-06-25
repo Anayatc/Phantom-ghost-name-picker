@@ -10,11 +10,28 @@
 <body>
     <h1>Phantom Ghost Name Picker</h1>
     <h3>Phantom Ghost Names:</h3>
-
-    {{  names }}
-
     <form action="form.html" method="get">
         <button type="submit" class="btn btn-default">Get A Phantom Name</button>
+
+    <div class="container">
+        <h2>Phantom Names</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>Ghost Name</tr>
+                <tr>Taken By</tr>
+                <tr>Available</tr>
+            </thead>
+            <tbody>
+            {% for name in names %}
+            <tr>{{ name }}</tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+
+    </div>
+    {%  for name in names %}
+        <p>{{ name }}</p>
+    {% endfor %}
     </form>
 </body>
 </html>
