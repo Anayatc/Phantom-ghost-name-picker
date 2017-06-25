@@ -20,6 +20,7 @@ import webapp2
 import jinja2
 import os
 from google.appengine.ext import db
+from google.appengine.ext.webapp import template
 
 
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"))
@@ -50,22 +51,21 @@ class MainHandler(webapp2.RequestHandler):
         self.response.out.write(template.render(template_values))
 
     def post(self):
-        template = jinja_environment.get_template('form.html')
-        self.response.out.write(template.render(template, {}))
+        path = os.path.join(os.path.dirname(__file__), 'templates/form.html')
+        self.response.out.write(template.render(path, {}))
 
 
 class FormHandler(webapp2.RedirectHandler):
 
     def get(self):
-        template = jinja_environment.get_template('form.html')
-        self.response.out.write(template.render(template, {}))
+        path = os.path.join(os.path.dirname(__file__), 'templates/form.html')
+        self.response.out.write(template.render(path, {}))
 
     def post(self):
         name = Name(firstname=self.request.get('first-name'), lastname=self.request.get('last-name'))
         name.put()
-        template = jinja_environment.get_template('select-name.html')
-        self.response.out.write(template.render(template, {}))
-
+        path = os.path.join(os.path.dirname(__file__), 'templates/select-name.html')
+        self.response.out.write(template.render(path, {}))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

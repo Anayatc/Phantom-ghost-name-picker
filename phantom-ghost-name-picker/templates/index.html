@@ -8,6 +8,7 @@
 
 </head>
 <body>
+<div class="container">
     <h1>Phantom Ghost Name Picker</h1>
     <h3>Phantom Ghost Names:</h3>
     <form action="form.html" method="get">
@@ -16,22 +17,21 @@
     <div class="container">
         <h2>Phantom Names</h2>
         <table class="table table-hover">
-            <thead>
-                <tr>Ghost Name</tr>
-                <tr>Taken By</tr>
-                <tr>Available</tr>
-            </thead>
-            <tbody>
+            <tr>
+                <th>Ghost Name</th>
+                <th>Taken By</th>
+                <th>Available</th>
+            </tr>
+
             {% for name in names %}
-            <tr>{{ name }}</tr>
+            <tr>
+            <td>{{ name }}</td>
             {%  endfor %}
-            </tbody>
+            </tr>
         </table>
 
     </div>
-    {%  for name in names %}
-        <p>{{ name }}</p>
-    {% endfor %}
     </form>
+</div>
 </body>
 </html>
